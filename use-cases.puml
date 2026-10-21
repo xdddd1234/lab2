@@ -35,7 +35,7 @@ Notify -- UC06
 
 UC03 ..> Availability : <<include>>
 UC02 ..> Email : <<include>>
-Search ..> UC01 : <<extend>>
+Search ..> UC01 : <<extend>>\n[непорожній пошуковий запит]
 
 note right of Search
   Розширення виконується,
