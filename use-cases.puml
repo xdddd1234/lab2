@@ -1,0 +1,43 @@
+
+@startuml
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Читач" as Reader
+actor "Бібліотекар" as Librarian
+
+rectangle "Library Management System" {
+  usecase "UC-01\nПерегляд каталогу\nта пошук книг" as UC01
+  usecase "UC-02\nРеєстрація читача" as UC02
+  usecase "UC-03\nВидача книги" as UC03
+  usecase "UC-04\nПовернення книги" as UC04
+  usecase "UC-05\nПерегляд власної\nісторії видач" as UC05
+}
+
+Reader -- UC01
+Reader -- UC05
+
+Librarian -- UC02
+Librarian -- UC03
+Librarian -- UC04
+
+note bottom of UC03
+  Основний прецедент роботи.
+  Перевірки:
+  - авторизація бібліотекаря;
+  - реєстрація читача;
+  - доступність книги;
+  - правильність due_date.
+
+  Деталі: SC-01 ... SC-04
+end note
+
+note bottom of UC01
+  Пошук доступний за
+  непорожнім запитом.
+end note
+
+@enduml
+
