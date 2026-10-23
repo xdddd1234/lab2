@@ -1,52 +1,43 @@
 
 @startuml
 left to right direction
-skinparam packageStyle rectangle
 
-actor "Користувач\nбібліотеки" as User
+skinparam packageStyle rectangle
+skinparam shadowing false
+
 actor "Читач" as Reader
 actor "Бібліотекар" as Librarian
-actor "Сервіс\nсповіщень" as Notify
-
-Reader --|> User
-Librarian --|> User
 
 rectangle "Library Management System" {
-  usecase "UC-01\nПерегляд каталогу" as UC01
+  usecase "UC-01\nПерегляд каталогу\nта пошук книг" as UC01
   usecase "UC-02\nРеєстрація читача" as UC02
   usecase "UC-03\nВидача книги" as UC03
   usecase "UC-04\nПовернення книги" as UC04
-  usecase "UC-05\nПерегляд історії видач" as UC05
-  usecase "UC-06\nНадсилання нагадування" as UC06
-
-  usecase "Пошук книги\nза назвою" as Search
-  usecase "Перевірка\nдоступності книги" as Availability
-  usecase "Перевірка\nунікальності email" as Email
+  usecase "UC-05\nПерегляд власної\nісторії видач" as UC05
 }
 
-Reader --> UC01
-Reader --> UC05
+Reader -- UC01
+Reader -- UC05
 
-Librarian --> UC02
-Librarian --> UC03
-Librarian --> UC04
+Librarian -- UC02
+Librarian -- UC03
+Librarian -- UC04
 
-Notify -- UC06
+note bottom of UC03
+  Основний прецедент роботи.
+  Перевірки:
+  - авторизація бібліотекаря;
+  - реєстрація читача;
+  - доступність книги;
+  - правильність due_date.
 
-UC03 ..> Availability : <<include>>
-UC02 ..> Email : <<include>>
-Search ..> UC01 : <<extend>>\n[непорожній пошуковий запит]
-
-note right of Search
-  Розширення виконується,
-  коли читач вводить
-  пошуковий запит.
+  Деталі: SC-01 ... SC-04
 end note
 
-note right of UC06
-  Ініціюється системою
-  в дату due_date
-  активної видачі.
+note bottom of UC01
+  Пошук доступний за
+  непорожнім запитом.
 end note
 
 @enduml
+
